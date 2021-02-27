@@ -1,0 +1,61 @@
+﻿@model PagedList.IPagedList<MvcCodeFirstProject__Elias.Models.Book>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Book Infromation</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div>
+    @using (Html.BeginForm())
+    {
+    <p>
+        Find By Book Name: @Html.TextBox("searchString")
+        <input type="submit" value="Search" />
+    </p>
+    }
+    <table class="table table-bordered">
+        <tr style="background-color:cornsilk;">
+            <th>
+                @Html.ActionLink("BookName", "Index", new { sortOrder = ViewBag.NameSortParam })
+            </th>
+            <th>Author Name</th>
+            <th>Borrow Date</th>
+            <th>Image</th>
+            <th>Action Name</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BorrowDate)
+                </td>
+
+                <td><img src="@Url.Content(item.ImagePath)" height="70" width="65" /></td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.BookID }) |
+         
+                    @Html.ActionLink("Delete", "Delete", new { id = item.BookID })
+                </td>
+            </tr>
+        }
+
+    </table>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+   new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }
+   ));
+</div>
+

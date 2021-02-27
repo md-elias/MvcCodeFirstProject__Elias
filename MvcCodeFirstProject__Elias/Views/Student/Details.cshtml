@@ -1,0 +1,109 @@
+﻿@model MvcCodeFirstProject__Elias.Models.Student
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#examInfo").click(function () {
+            $.ajax({
+                url: "@Url.Action("ExamDetails", "Student", new { id=Model.StudentId})",
+                type: "get",
+                dataType: "json",
+                success: function (result) {
+                    $("#examdisplay table tbody").empty;
+                    for (var i = 0; i < result.length; i++) {
+                        $("#examdisplay table tbody").append("<tr><td>" + result[i].examName + "</td><td>" + result[i].examDate + "</td><td>" + result[i].resultDate + "</td><td>" + result[i].totalMarks + "</td></tr>");
+                    }
+                    $("#examdisplay").show();
+                }
+            });
+            this.disabled = true;
+        })
+    })
+</script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <fieldset>
+                <legend>Student Information</legend>
+
+                <span class="display-label">
+                    @Html.DisplayNameFor(model => model.Name) :
+                </span>
+                <span class="display-field">
+                    @Html.DisplayFor(model => model.Name)
+                </span>
+                <br />
+
+                <span class="display-label">
+                    @Html.DisplayNameFor(model => model.CoreSubject) :
+                </span>
+                <span class="display-field">
+                    @Html.DisplayFor(model => model.CoreSubject)
+                </span>
+                <br />
+
+                <span class="display-label">
+                    @Html.DisplayNameFor(model => model.Round) :
+                </span>
+                <span class="display-field">
+                    @Html.DisplayFor(model => model.Round)
+                </span>
+                <br />
+
+                <span class="display-label">
+                    @Html.DisplayNameFor(model => model.TSP) :
+                </span>
+                <span class="display-field">
+                    @Html.DisplayFor(model => model.TSP)
+                </span>
+                <br />
+
+                <span class="display-label">
+                    @Html.DisplayNameFor(model => model.Email) :
+                </span>
+                <span class="display-field">
+                    @Html.DisplayFor(model => model.Email)
+                </span>
+                <br />
+
+                <span class="display-label">
+                    @Html.DisplayNameFor(model => model.DateOfBirth) :
+                </span>
+                <span class="display-field">
+                    @Html.DisplayFor(model => model.DateOfBirth)
+                </span>
+
+            </fieldset>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.StudentId }) |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <button class="btn btn-info" id="examInfo" data-exam-id="@Model.StudentId">Exam Details</button>
+            </div>
+            <div id="examdisplay" style="display:none">
+                <table class="table table-bordered">             
+                    <thead>
+                         <th>Exam Name</th>
+                         <th>Exam Date</th>
+                         <th>Result Date</th>
+                         <th>Total Marks</th>
+                 </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

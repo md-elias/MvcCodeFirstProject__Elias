@@ -1,0 +1,43 @@
+﻿@model MvcCodeFirstProject__Elias.Models.Course
+
+@{
+    //Layout = null;
+    ViewBag.Title = "Details";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Course</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.CourseName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CourseName)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CourseDuration)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CourseDuration)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.CourseID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>
